@@ -32,13 +32,11 @@ jobs:
     - name: Commit Images to a public link branch
       if: always()
       run: |
-       git config --global user.name "GitHub Automation Bot"
-       git config --global user.email "actions@github.com"
-        
-      # Switch to an isolated branch specifically for holding output image media assets
-       git checkout -b media-storage || git checkout media-storage
-        
-      # Add, commit and force-upload the new screenshot files
+        git config --global user.name "GitHub Automation Bot"
+        git config --global user.email "actions@github.com"      
+        # Switch to an isolated branch specifically for holding output image media assets
+        git checkout -b media-storage || git checkout media-storage     
+        # Add, commit and force-upload the new screenshot files
         git add screenshots/
         git commit -m "storage: append timestamped run images [skip ci]"
         git push origin media-storage --force
