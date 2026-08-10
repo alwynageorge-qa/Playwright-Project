@@ -6,6 +6,7 @@ import * as fs from 'fs';
 // CONFIGURATION VARIABLES
 // ==========================================
 const DEFAULTS = {
+  testName: 'competitions',
   urls: ['https://www.mcdonalds.com/au/en-au/competitions-terms-and-conditions.html'],
   delayMs: 10000,
   slackChannelId: 'C0BP73V57NG' // REPLACE WITH YOUR RAW SLACK CHANNEL ID
@@ -31,9 +32,11 @@ test.describe('Dynamic Firefox Screenshots to Slack', () => {
       const pageTitle = await page.title();
       const safePageName = pageTitle.replace(/[^a-zA-Z0-9]/g, '_');
       
-      // Generate clean timestamp strings
-      const timestamp = new Date().toISOString().replace(/[^0-9]/g, '').slice(0, 14);
-      const finalFileName = `screenshots/${safePageName}_${timestamp}.png`;
+     // Uses your custom test name variable alongside the timestamp
+      const timestamp = Date.now(); // Raw millisecond numeric string
+      const date = new Date().toLocaleDateString('en-AU').replace(/\//g, '-');
+      const finalFileName = `screenshots/${DEFAULTS.testName}_${date}_${timestamp}.png`;
+// Result: screenshots/competitions_1770550500000.png
 
       // 1. Capture the snapshot image onto disk storage
       await page.screenshot({ path: finalFileName, fullPage: true });

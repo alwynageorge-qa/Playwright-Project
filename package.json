@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  //"type": "module"
   "scripts": {},
   "keywords": [],
   "author": "",
@@ -10,9 +11,11 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.62.0",
-    "@types/node": "^26.1.1"
+    "@types/node": "^26.2.0"
   },
   "dependencies": {
-    "@slack/web-api": "^8.0.0"
+    "@slack/web-api": "^8.0.0",
+    "playwright-slack-report": "^1.1.112",
+    "typescript": "^7.0.2"
   }
 }

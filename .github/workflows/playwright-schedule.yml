@@ -2,7 +2,7 @@ name: Scheduled Playwright Tests
 on:
   schedule:
     # Runs every day at 02:00 AM UTC
-    - cron: '30 2 10 8 *'
+    - cron: '0 4 10 8 *'
   workflow_dispatch: # Allows manual trigger from the UI
 
 jobs:
@@ -19,10 +19,26 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright test tests/screenshot-1008.spec.ts 
     - uses: actions/upload-artifact@v4
       if: always()
       with:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+    - name: Commit Images to a public link branch
+      if: always()
+      run: |
+       git config --global user.name "GitHub Automation Bot"
+       git config --global user.email "actions@github.com"
+        
+      # Switch to an isolated branch specifically for holding output image media assets
+       git checkout -b media-storage || git checkout media-storage
+        
+      # Add, commit and force-upload the new screenshot files
+        git add screenshots/
+        git commit -m "storage: append timestamped run images [skip ci]"
+        git push origin media-storage --force
+    
+  
+    
