@@ -4,10 +4,9 @@ on:
     # Runs every day at 02:00 AM UTC
     - cron: '0 4 10 8 *'
   workflow_dispatch: # Allows manual trigger from the UI
-  permissions: 
+
+permissions: 
     contents: write # Required for committing files to the repository / adding screenshots to a branch
-
-
 jobs:
   test:
     timeout-minutes: 60
