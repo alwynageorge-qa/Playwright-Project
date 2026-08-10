@@ -37,17 +37,20 @@ test.describe('Dynamic Firefox Screenshots to Slack', () => {
       await page.screenshot({ path: finalFileName, fullPage: true });
       console.log(`📸 Saved screenshot locally: ${finalFileName}`);
 
-      // 2. Upload the raw image file directly to your Slack channel window
       if (slackClient) {
         console.log(`Uploading ${finalFileName} straight to Slack...`);
         try {
-          // Playwright saves the file instantly, so we can pass the path string directly 
-          // to uploadV2 without importing or requiring external file system packages
+          // Fetch current system execution clock time
+          const now = new Date();
+          const runtimeString = now.toLocaleTimeString('en-AU', { hour12: false });
+          const dateString = now.toLocaleDateString('en-AU').replace(/\//g, '-');
+
           await slackClient.files.uploadV2({
             channel_id: DEFAULTS.slackChannelId,
-            file: finalFileName, // Pass the path string directly
+            file: finalFileName, 
             filename: `${suite.name}_${date}.png`,
-            initial_comment: `🚀 *New Playwright Capture Complete!*\n*URL tested:* ${suite.url}\n*Page Title:* ${pageTitle}`
+            // Appends the current system execution time safely into your Slack message card text
+            initial_comment: `🚀 *New Playwright Capture Complete!*\n*URL tested:* ${suite.url}\n*Page Title:* ${pageTitle}\n*Execution Time:* ${dateString} @ ${runtimeString}`
           });
           console.log('✅ Screenshot uploaded directly to Slack channel!');
         } catch (slackError: any) {
