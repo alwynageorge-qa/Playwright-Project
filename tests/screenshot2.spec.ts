@@ -8,9 +8,9 @@ const CONFIG = {
   delayMs: 10000, // 10 seconds loading buffer
   slackChannelId: 'C0BP73V57NG',
   testSuites: [
-    { name: 'competitions', url: 'https://mcdonalds.com' },
-    { name: 'MyMaccasRewards', url: 'https://mcdonalds.com' },
-    { name: 'McDelivery', url: 'https://mcdonalds.com' }
+    { name: 'WebOrdering', url: 'https://www.mcdonalds.com/au/en-au/web-ordering.html' },
+    { name: 'MyMaccasRewards', url: 'https://www.mcdonalds.com/au/en-au/mymaccas-rewards.html' },
+    { name: 'McDelivery', url: 'https://www.mcdonalds.com/au/en-au/mcdelivery.html' }
   ]
 };
 
