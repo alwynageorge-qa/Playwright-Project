@@ -29,7 +29,7 @@ jobs:
       run: npx playwright install --with-deps
 
     - name: Run Playwright tests
-      run: npx playwright test tests/screenshot-more-than-one.spec.ts
+      run: npx playwright test tests/screenshot_more_than_one.spec.ts
 
     - uses: actions/upload-artifact@v4
       if: always()
