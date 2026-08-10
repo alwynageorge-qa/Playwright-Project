@@ -30,9 +30,9 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     // Using HTTP/1.1 fallback to avoid failed chromium testcases
-    launchOptions: {
+    /*launchOptions: {
     args: ['--disable-http2'], // Force HTTP/1.1
-    },
+    },*/
     
     trace: 'on-first-retry',
   },
