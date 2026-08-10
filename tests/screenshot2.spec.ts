@@ -2,81 +2,77 @@ import { test, devices } from '@playwright/test';
 import { WebClient } from '@slack/web-api';
 
 // ==========================================
-// CONFIGURATION VARIABLES
+// AUTOMATION CONFIGURATION BLOCK
 // ==========================================
-const DEFAULTS = {
-  delayMs: 10000,
-  slackChannelId: 'C0BP73V57NG', 
+const CONFIG = {
+  delayMs: 10000, // 10 seconds loading buffer
+  slackChannelId: 'C0BP73V57NG',
   testSuites: [
-    { name: 'competitions', url: 'https://www.mcdonalds.com/au/en-au/competitions-terms-and-conditions.html' },
-    { name: 'MyMaccasRewards', url: 'https://www.mcdonalds.com/au/en-au/mymaccas-rewards.html' },
-    { name: 'McDelivery', url: 'https://www.mcdonalds.com/au/en-au/mcdelivery.html' }
+    { name: 'competitions', url: 'https://mcdonalds.com' },
+    { name: 'MyMaccasRewards', url: 'https://mcdonalds.com' },
+    { name: 'McDelivery', url: 'https://mcdonalds.com' }
   ]
 };
 
-// Custom date formatter function to return formats like "10Aug"
-function getCustomDateStamp(): string {
+// Generates explicit text month abbreviations (e.g., "10Aug")
+function getFormattedDateStamp(): string {
   const date = new Date();
-  const day = date.getDate(); // Extracts day as a number (e.g., 10)
-  
-  // Array map to convert month indexes cleanly into 3-letter strings
+  const day = date.getDate();
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const monthLabel = months[date.getMonth()]; 
-
-  return `${day}${monthLabel}`;
+  const shortMonth = months[date.getMonth()];
+  return `${day}${shortMonth}`;
 }
 
-// Initialize the Slack client securely without using the raw 'process' keyword
 const env = (globalThis as any).process?.env || {};
-const slackToken = env.SLACK_BOT_TOKEN || '';
-const slackClient = slackToken ? new WebClient(slackToken) : null;
+const slackClient = env.SLACK_BOT_TOKEN ? new WebClient(env.SLACK_BOT_TOKEN) : null;
 
-// Force this entire test file to run in Desktop Firefox
 test.use({ ...devices['Desktop Firefox'] });
 
-test.describe('Dynamic Firefox Screenshots to Slack', () => {
+test.describe('McDonalds Full Page Capture Routine', () => {
   
-  // Track loop sequence index to append the unique run/test count
-  for (let i = 0; i < DEFAULTS.testSuites.length; i++) {
-    const suite = DEFAULTS.testSuites[i];
+  for (let i = 0; i < CONFIG.testSuites.length; i++) {
+    const suite = CONFIG.testSuites[i];
     
-    test(`Capture full page for ${suite.name}`, async ({ page }) => {
-      await page.goto(suite.url);
-      await page.waitForTimeout(DEFAULTS.delayMs);
+    test(`Snap and upload ${suite.name}`, async ({ page }) => {
+      // Pad timeout boundaries safely for network load + slack streaming overheads
+      test.setTimeout(CONFIG.delayMs + 45000);
 
-      // Generate parameters for your precise naming pattern: test name + date + sequence number
-      const dateLabel = getCustomDateStamp();
-      const runCount = i + 1; // Converts index 0,1,2 into sequential counts 1,2,3
+      console.log(`Navigating to URL: ${suite.url}`);
+      await page.goto(suite.url, {  waitUntil: 'networkidle' });
       
-      // Result layout matches exactly: screenshots/competitions-10Aug-1.png
-      const filename = `screenshots/${suite.name}-${dateLabel}-${runCount}.png`;
+      console.log(`Holding execution for ${CONFIG.delayMs / 1000}s...`);
+      await page.waitForTimeout(CONFIG.delayMs);
 
-      console.log(`Generated Filename: ${filename}`);
+      // Build target naming convention variables cleanly
+      const dateTag = getFormattedDateStamp();
+      const executionCount = i + 1;
+      const cleanFileName = `${suite.name}-${dateTag}-${executionCount}.png`;
+      const localPath = `screenshots/${cleanFileName}`;
 
-      // 1. Capture the full-length snapshot onto disk storage
-      await page.screenshot({ path: filename, fullPage: true });
-      console.log(`📸 Saved screenshot locally: ${filename}`);
+      // 1. Snapshot generation onto runner disk storage
+      await page.screenshot({ path: localPath, fullPage: true });
+      console.log(`📸 Image saved locally: ${localPath}`);
 
-      // 2. Upload the raw image file directly to your Slack channel window
+      // 2. Direct binary streaming payload delivery straight into Slack channels
       if (slackClient) {
-        console.log(`Uploading ${filename} straight to Slack...`);
+        console.log(`Streaming asset ${cleanFileName} directly to Slack...`);
         try {
           const now = new Date();
-          const runtimeString = now.toLocaleTimeString('en-AU', { hour12: false });
+          const timestampString = now.toLocaleTimeString('en-AU', { hour12: false });
 
           await slackClient.files.uploadV2({
-            channel_id: DEFAULTS.slackChannelId,
-            file: filename, 
-            filename: `${suite.name}-${dateLabel}-${runCount}.png`,
-            initial_comment: `🚀 *New Playwright Capture Complete!*\n*URL tested:* ${suite.url}\n*File Asset:* \`${suite.name}-${dateLabel}-${runCount}.png\`\n*Execution Time:* ${runtimeString}`
+            channel_id: CONFIG.slackChannelId,
+            file: localPath,
+            filename: cleanFileName,
+            initial_comment: `🚀 *Playwright Capture Complete!*\n*Page Target:* \`${suite.name}\`\n*Direct link format tracking identifier:* \`${cleanFileName}\`\n*Timestamp:* ${timestampString} AEST`
           });
-          console.log('✅ Screenshot uploaded directly to Slack channel!');
+          console.log('✅ Asset posted successfully to channel workflow windows!');
         } catch (slackError: any) {
-          console.error('❌ Failed to upload image file to Slack API:', slackError.message);
+          console.error('❌ Slack binary stream rejected:', slackError.message);
         }
       } else {
-        console.log('⚠️ Skipping Slack upload: SLACK_BOT_TOKEN environment variable is not defined.');
+        console.log('⚠️ Upload skipped: SLACK_BOT_TOKEN value is currently undefined.');
       }
     });
-  } 
+  }
 });

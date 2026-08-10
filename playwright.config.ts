@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// Safely pull system environment variables without causing typescript errors
+// Safe global accessor to pull environmental secrets without compilation errors
 const env = (globalThis as any).process?.env || {};
 
 export default defineConfig({
@@ -9,23 +9,10 @@ export default defineConfig({
   forbidOnly: !!env.CI,
   retries: env.CI ? 2 : 0,
   workers: env.CI ? 1 : undefined,
-
-  // Clean, flat configuration format for multi-reporters
-  reporter: [
-    ['html'],
-    [
-      'playwright-slack-report',
-      {
-        slackWebHookUrl: env.SLACK_WEBHOOK || '',
-        sendResults: 'always'
-      }
-    ]
-  ],
-
+  reporter: 'html',
   use: {
     trace: 'on-first-retry',
   },
-
   projects: [
     {
       name: 'firefox',
