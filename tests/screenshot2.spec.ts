@@ -8,12 +8,12 @@ const CONFIG = {
   delayMs: 10000, // 10 seconds loading buffer
   slackChannelId: 'C0BP73V57NG',
   testSuites: [
-    { name: 'NZMenu', url: 'https://mcdonalds.com/nz/en-nz/menu.html?hsCacheBuster=700097' },
-    { name: 'NZSides', url: 'https://mcdonalds.com/nz/en-nz/menu/sides.html?hsCacheBuster=716433' },
-    { name: 'NZMcHappyCookies', url: 'https://mcdonalds.com/nz/en-nz/menu/sides/mchappy-cookies.html?hsCacheBuster=986829' },
-    { name: 'NZMcHappyDay', url: 'https://mcdonalds.com/nz/en-nz/mchappy-day.html?hsCacheBuster=834010 ' },
-    { name: 'NZMaccasComm', url: 'https://www.mcdonalds.com/nz/en-nz/maccas-in-the-community.html?hsCacheBuster=468017'},
-    { name: 'NZHome', url: 'https://www.mcdonalds.com/nz/en-nz.html?hsCacheBuster=155931'}
+    { name: 'NZMenu', url: 'https://mcdonalds.com/nz/en-nz/menu.html?hsCacheBuster=7000971' },
+    { name: 'NZSides', url: 'https://mcdonalds.com/nz/en-nz/menu/sides.html?hsCacheBuster=7164331' },
+    { name: 'NZMcHappyCookies', url: 'https://mcdonalds.com/nz/en-nz/menu/sides/mchappy-cookies.html?hsCacheBuster=9868291' },
+    { name: 'NZMcHappyDay', url: 'https://mcdonalds.com/nz/en-nz/mchappy-day.html?hsCacheBuster=8340101 ' },
+    { name: 'NZMaccasComm', url: 'https://www.mcdonalds.com/nz/en-nz/maccas-in-the-community.html?hsCacheBuster=4680171'},
+    { name: 'NZHome', url: 'https://www.mcdonalds.com/nz/en-nz.html?hsCacheBuster=1559311'}
 
   ]
 };
