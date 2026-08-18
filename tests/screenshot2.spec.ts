@@ -8,9 +8,13 @@ const CONFIG = {
   delayMs: 10000, // 10 seconds loading buffer
   slackChannelId: 'C0BP73V57NG',
   testSuites: [
-    { name: 'WebOrdering', url: 'https://www.mcdonalds.com/au/en-au/web-ordering.html' },
-    { name: 'MyMaccasRewards', url: 'https://www.mcdonalds.com/au/en-au/mymaccas-rewards.html' },
-    { name: 'McDelivery', url: 'https://www.mcdonalds.com/au/en-au/mcdelivery.html' }
+    { name: 'NZMenu', url: 'https://mcdonalds.com/nz/en-nz/menu.html?hsCacheBuster=700097' },
+    { name: 'NZSides', url: 'https://mcdonalds.com/nz/en-nz/menu/sides.html?hsCacheBuster=716433' },
+    { name: 'NZMcHappyCookies', url: 'https://mcdonalds.com/nz/en-nz/menu/sides/mchappy-cookies.html?hsCacheBuster=986829' },
+    { name: 'NZMcHappyDay', url: 'https://mcdonalds.com/nz/en-nz/mchappy-day.html?hsCacheBuster=834010 ' },
+    { name: 'NZMaccasComm', url: 'https://www.mcdonalds.com/nz/en-nz/maccas-in-the-community.html?hsCacheBuster=468017'},
+    { name: 'NZHome', url: 'https://www.mcdonalds.com/nz/en-nz.html?hsCacheBuster=155931'}
+
   ]
 };
 
