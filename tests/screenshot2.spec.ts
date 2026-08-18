@@ -8,12 +8,11 @@ const CONFIG = {
   delayMs: 10000, // 10 seconds loading buffer
   slackChannelId: 'C0BP73V57NG',
   testSuites: [
-    { name: 'NZMenu', url: 'https://mcdonalds.com/nz/en-nz/menu.html?hsCacheBuster=7000971' },
-    { name: 'NZSides', url: 'https://mcdonalds.com/nz/en-nz/menu/sides.html?hsCacheBuster=7164331' },
-    { name: 'NZMcHappyCookies', url: 'https://mcdonalds.com/nz/en-nz/menu/sides/mchappy-cookies.html?hsCacheBuster=9868291' },
-    { name: 'NZMcHappyDay', url: 'https://mcdonalds.com/nz/en-nz/mchappy-day.html?hsCacheBuster=8340101 ' },
-    { name: 'NZMaccasComm', url: 'https://www.mcdonalds.com/nz/en-nz/maccas-in-the-community.html?hsCacheBuster=4680171'},
-    { name: 'NZHome', url: 'https://www.mcdonalds.com/nz/en-nz.html?hsCacheBuster=1559311'}
+    { name: 'AUWhatsNew', url: 'https://www.mcdonalds.com/au/en-au/whats-new.html?hsCacheBuster=990882' },
+    { name: 'AUMyMaccas', url: 'https://www.mcdonalds.com/au/en-au/mymaccas-rewards.html?hsCacheBuster=819632' },
+    { name: 'AUPartnerRewards', url: 'https://www.mcdonalds.com/au/en-au/partner-rewards.html' },
+    { name: 'AUTimezone', url: 'https://mcdonalds.com/au/en-au/partner-rewards/timezone.html?hsCacheBuster=166923 ' },
+    { name: 'AUZoneBowling', url: 'https://mcdonalds.com/au/en-au/partner-rewards/zone-bowling.html'}
 
   ]
 };
