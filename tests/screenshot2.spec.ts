@@ -5,14 +5,14 @@ import { WebClient } from '@slack/web-api';
 // AUTOMATION CONFIGURATION BLOCK
 // ==========================================
 const CONFIG = {
-  delayMs: 10000, // 10 seconds loading buffer
+  delayMs: 20000, // 20 seconds loading buffer
   slackChannelId: 'C0BP73V57NG',
   testSuites: [
-    { name: 'AUWhatsNew', url: 'https://www.mcdonalds.com/au/en-au/whats-new.html?hsCacheBuster=990882' },
-    { name: 'AUMyMaccas', url: 'https://www.mcdonalds.com/au/en-au/mymaccas-rewards.html?hsCacheBuster=819632' },
-    { name: 'AUPartnerRewards', url: 'https://www.mcdonalds.com/au/en-au/partner-rewards.html' },
-    { name: 'AUTimezone', url: 'https://mcdonalds.com/au/en-au/partner-rewards/timezone.html?hsCacheBuster=166923 ' },
-    { name: 'AUZoneBowling', url: 'https://mcdonalds.com/au/en-au/partner-rewards/zone-bowling.html'}
+    { name: 'AUWhatsNew', url: 'https://www.mcdonalds.com/au/en-au/whats-new.html?hsCacheBuster=9908825' },
+    { name: 'AUMyMaccas', url: 'https://www.mcdonalds.com/au/en-au/mymaccas-rewards.html?hsCacheBuster=8196322' },
+    { name: 'AUPartnerRewards', url: 'https://www.mcdonalds.com/au/en-au/partner-rewards.html?hsCacheBuster=123456745' },
+    { name: 'AUTimezone', url: 'https://mcdonalds.com/au/en-au/partner-rewards/timezone.html?hsCacheBuster=166923' },
+    { name: 'AUZoneBowling', url: 'https://mcdonalds.com/au/en-au/partner-rewards/zone-bowling.html?hsCacheBuster=16692309ol' }
 
   ]
 };
@@ -67,7 +67,7 @@ test.describe('McDonalds Full Page Capture Routine', () => {
             channel_id: CONFIG.slackChannelId,
             file: localPath,
             filename: cleanFileName,
-            initial_comment: `🚀 *Playwright Capture Complete!*\n*Page Target:* \`${suite.name}\`\n*Direct link format tracking identifier:* \`${cleanFileName}\`\n*Timestamp:* ${timestampString} AEST`
+            initial_comment: `🚀 *Playwright Capture Complete!*\n*Page Target:* \`${suite.name}\`\n*Direct link format tracking identifier:* \`${cleanFileName}\`\n*Timestamp:* ${timestampString} AEST \`\n *URL Tested:* \`${suite.url}\``
           });
           console.log('✅ Asset posted successfully to channel workflow windows!');
         } catch (slackError: any) {
